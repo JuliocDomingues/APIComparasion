@@ -11,3 +11,14 @@ This project provides the following features:
   <li>Draw a sphere on each part of the face that has been detected.</li>
 </ul>
 
+![alt text](https://github.com/JuliocDomingues/APIComparasion/blob/master/images/imgCenterDotNet.png "Execution of the face recognizer using the CenterFaceDotNet API")
+
+## Wrapper - [EmguCV](https://www.emgu.com/wiki/index.php/Main_Page)
+This project provides the following features:
+
+<ul>
+  <li>Face detection via webcam.</li>
+  <li>Draw a rectangle around each face.</li>
+</ul>
+
+![alt text](https://github.com/JuliocDomingues/APIComparasion/blob/master/images/imgEmgu.png "Execution of the face recognizer using the EmguCV Wrapper")
