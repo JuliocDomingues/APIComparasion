@@ -5,6 +5,7 @@ using CenterFaceDotNet;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using APIComparasion.HelperMethods;
+using System;
 
 namespace APIComparasion.CenterFaceAPI
 {
@@ -30,6 +31,7 @@ namespace APIComparasion.CenterFaceAPI
         public static Mat DetectFaces(Mat image, int width, int height)
         {
             var inMat = NcnnDotNet.Mat.FromPixels(image.Data, NcnnDotNet.PixelType.Bgr2Gray, image.Cols, image.Rows);
+
             var faceInfos = _centerFace.Detect(inMat, image.Cols, image.Rows).ToArray();
 
             foreach (FaceInfo face in faceInfos)
@@ -51,8 +53,6 @@ namespace APIComparasion.CenterFaceAPI
                     var center = new OpenCvSharp.Point(face.Landmarks[2 * j], face.Landmarks[2 * j + 1]);
                     Cv2.Circle(image, center, 2, new Scalar(255, 255, 0), 2);
                 }
-
-               
             }
             return image;
         }
