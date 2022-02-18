@@ -33,18 +33,24 @@ namespace APIComparasion
 
         private void btnCenterFace_Click(object sender, EventArgs e)
         {
-            _captureOpenCv = new VideoCapture(0);
-            centerFace = true;
+            if (!emguCvFlag)
+            {
+                _captureOpenCv = new VideoCapture(0);
+                centerFace = true;
 
-            Application.Idle += ProcessFrame;
+                Application.Idle += ProcessFrame;
+            }    
         }
 
         private void btnEmgu_Click(object sender, EventArgs e)
         {
-            _captureEmgu = new Emgu.CV.Capture();
-            emguCvFlag = true;
+            if (!centerFace)
+            {
+                _captureEmgu = new Emgu.CV.Capture();
+                emguCvFlag = true;
 
-            Application.Idle += ProcessFrame;
+                Application.Idle += ProcessFrame;
+            }
         }
 
         private void ProcessFrame(object sender, EventArgs e)
@@ -53,8 +59,7 @@ namespace APIComparasion
             {
                 imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
 
-               Mat mat = CenterFaceDotNetAPI.DetectFaces(imageOpenCv, picFace.Width, picFace.Height);
-
+                Mat mat = CenterFaceDotNetAPI.DetectFaces(imageOpenCv, picFace.Width, picFace.Height);
                 picCapture.Image = mat.ToBitmap();
                 picFace.Image = CenterFaceDotNetAPI.smallImage;
             }
