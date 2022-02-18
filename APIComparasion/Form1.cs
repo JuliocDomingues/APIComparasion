@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using OpenCvSharp;
 using APIComparasion.HelperMethods;
 using APIComparasion.CenterFaceAPI;
+using APIComparasion.EmguCVAPI;
 using OpenCvSharp.Extensions;
 
 namespace APIComparasion
@@ -17,9 +18,12 @@ namespace APIComparasion
     public partial class Form1 : Form
     {
         #region Variables
-        private VideoCapture _capture = null;
+        private VideoCapture _captureOpenCv = null;
+        private Emgu.CV.Capture _captureEmgu = null;
         private bool centerFace = false;
-        Mat image;
+        private bool emguCvFlag = false;
+        Mat imageOpenCv;
+        Emgu.CV.Mat imageEmgu = new Emgu.CV.Mat();
         #endregion
 
         public Form1()
@@ -27,9 +31,19 @@ namespace APIComparasion
             InitializeComponent();
         }
 
-        private void btnCapture_Click(object sender, EventArgs e)
+        private void btnCenterFace_Click(object sender, EventArgs e)
         {
-            _capture = new VideoCapture(0);
+            _captureOpenCv = new VideoCapture(0);
+            centerFace = true;
+
+            Application.Idle += ProcessFrame;
+        }
+
+        private void btnEmgu_Click(object sender, EventArgs e)
+        {
+            _captureEmgu = new Emgu.CV.Capture();
+            emguCvFlag = true;
+
             Application.Idle += ProcessFrame;
         }
 
@@ -37,23 +51,32 @@ namespace APIComparasion
         {
             if (centerFace)
             {
-                image = Helpers.GetFrame(_capture, 1.0);
+                imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
 
-                OpenCvSharp.Mat mat = CenterFaceDotNetAPI.DetectFaces(image, picFace.Width, picFace.Height);
+               Mat mat = CenterFaceDotNetAPI.DetectFaces(imageOpenCv, picFace.Width, picFace.Height);
 
                 picCapture.Image = mat.ToBitmap();
                 picFace.Image = CenterFaceDotNetAPI.smallImage;
             }
+            else if (emguCvFlag)
+            {
+                _captureEmgu.Retrieve(imageEmgu, 0);
+                picCapture.Image = EmguCvAPI.DetectFaces(imageEmgu, picCapture.Width, picCapture.Height).Bitmap;
+
+                picFace.SizeMode = PictureBoxSizeMode.StretchImage;
+                picFace.Image = EmguCvAPI.resultImage.Bitmap;
+            }
             else
             {
-                image = Helpers.GetFrame(_capture, 1.0);
-                picCapture.Image = image.ToBitmap();
+                imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
+                picCapture.Image = imageOpenCv.ToBitmap();
             }
         }
 
-        private void btnCenterFace_Click(object sender, EventArgs e)
+        private void btnReset_Click(object sender, EventArgs e)
         {
-            centerFace = true;
+            Application.Restart();
+            Environment.Exit(0);
         }
     }
 }
