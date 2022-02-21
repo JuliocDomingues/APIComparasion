@@ -28,7 +28,7 @@ namespace APIComparasion.CenterFaceAPI
 
         }
 
-        public static Mat DetectFaces(Label detectionTimeLabel, Label drawingTimeLabel, Mat image, int width, int height)
+        public static Mat DetectFaces(Mat image, int width, int height, Label detectionTimeLabel, Label drawingTimeLabel)
         {
             // Start watch to mesure time to detect
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -40,8 +40,7 @@ namespace APIComparasion.CenterFaceAPI
             detectionTimeLabel.Text = "Detection time: " + watch.ElapsedMilliseconds.ToString() + " ms";
 
             // Restart watch to mesure time to draw
-            watch.Reset();
-            watch.Start();
+            watch.Restart();
 
             foreach (FaceInfo face in faceInfos)
             {

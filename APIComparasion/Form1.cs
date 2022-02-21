@@ -61,21 +61,29 @@ namespace APIComparasion
 
                 imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
 
-                Mat mat = CenterFaceDotNetAPI.DetectFaces(detectionTime, drawingTime, imageOpenCv, picFace.Width, picFace.Height);
+                Mat mat = CenterFaceDotNetAPI.DetectFaces(imageOpenCv, picFace.Width, picFace.Height, detectionTime, drawingTime);
 
                 picCapture.Image = mat.ToBitmap();
                 picFace.Image = CenterFaceDotNetAPI.smallImage;
-                
+
                 watch.Stop();
                 totalTime.Text = "Total time: " + watch.ElapsedMilliseconds.ToString() + " ms";
             }
             else if (emguCvFlag)
             {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+
                 _captureEmgu.Retrieve(imageEmgu, 0);
-                picCapture.Image = EmguCvAPI.DetectFaces(imageEmgu, picCapture.Width, picCapture.Height).Bitmap;
+                picCapture.Image = EmguCvAPI.DetectFaces(imageEmgu, picCapture.Width, picCapture.Height, detectionTime, drawingTime).Bitmap;
 
                 picFace.SizeMode = PictureBoxSizeMode.StretchImage;
-                picFace.Image = EmguCvAPI.resultImage.Bitmap;
+                if (EmguCvAPI.resultImage != null)
+                {
+                    picFace.Image = EmguCvAPI.resultImage.Bitmap;
+                }
+
+                watch.Stop();
+                totalTime.Text = "Total time: " + watch.ElapsedMilliseconds.ToString() + " ms";
             }
             else
             {

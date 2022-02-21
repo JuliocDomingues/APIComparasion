@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Windows.Forms;
 using Emgu.CV;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Structure;
@@ -22,8 +23,11 @@ namespace APIComparasion.EmguCVAPI
 
         }
 
-        public static Image<Bgr, Byte> DetectFaces(Mat frame, int width, int height)
+        public static Image<Bgr, Byte> DetectFaces(Mat frame, int width, int height, Label detectionTimeLabel, Label drawingTimeLabel)
         {
+            // Start watch to mesure time to detect
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
             currentFrame = frame.ToImage<Bgr, Byte>().Resize(width, height, Inter.Cubic);
 
             Mat grayImage = new Mat();
@@ -32,7 +36,13 @@ namespace APIComparasion.EmguCVAPI
 
             Rectangle[] faces = faceCasacdeClassifier.DetectMultiScale(grayImage, 1.1, 3, Size.Empty, Size.Empty);
 
-            if(faces.Length > 0)
+            watch.Stop();
+            detectionTimeLabel.Text = "Detection time: " + watch.ElapsedMilliseconds.ToString() + " ms";
+
+            // Restart watch to mesure time to draw
+            watch.Restart();
+
+            if (faces.Length > 0)
             {
                 foreach(var face in faces)
                 {
@@ -42,7 +52,10 @@ namespace APIComparasion.EmguCVAPI
                     CvInvoke.Rectangle(currentFrame, face, new Bgr(Color.Red).MCvScalar, 2);
                 }
             }
-            
+
+            watch.Stop();
+            drawingTimeLabel.Text = "Drawing time: " + watch.ElapsedMilliseconds.ToString() + " ms";
+
             return currentFrame;
         }
 
