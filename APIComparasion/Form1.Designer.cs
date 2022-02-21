@@ -36,8 +36,14 @@
             this.detectionTime = new System.Windows.Forms.Label();
             this.drawingTime = new System.Windows.Forms.Label();
             this.totalTime = new System.Windows.Forms.Label();
+            this.scaleFactor = new System.Windows.Forms.NumericUpDown();
+            this.neighbors = new System.Windows.Forms.NumericUpDown();
+            this.scaleFactorLbl = new System.Windows.Forms.Label();
+            this.neighborsLbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.picCapture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFace)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scaleFactor)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighbors)).BeginInit();
             this.SuspendLayout();
             // 
             // picCapture
@@ -91,15 +97,6 @@
             this.btnReset.UseVisualStyleBackColor = true;
             this.btnReset.Click += new System.EventHandler(this.btnReset_Click);
             // 
-            // totalTime
-            // 
-            this.totalTime.AutoSize = true;
-            this.totalTime.Location = new System.Drawing.Point(491, 218);
-            this.totalTime.Name = "totalTime";
-            this.totalTime.Size = new System.Drawing.Size(35, 13);
-            this.totalTime.TabIndex = 8;
-            this.totalTime.Text = "Total time: 0 ms";
-            // 
             // detectionTime
             // 
             this.detectionTime.AutoSize = true;
@@ -118,11 +115,96 @@
             this.drawingTime.TabIndex = 7;
             this.drawingTime.Text = "Drawing: 0 ms";
             // 
+            // totalTime
+            // 
+            this.totalTime.AutoSize = true;
+            this.totalTime.Location = new System.Drawing.Point(491, 218);
+            this.totalTime.Name = "totalTime";
+            this.totalTime.Size = new System.Drawing.Size(81, 13);
+            this.totalTime.TabIndex = 8;
+            this.totalTime.Text = "Total time: 0 ms";
+            // 
+            // scaleFactor
+            // 
+            this.scaleFactor.DecimalPlaces = 1;
+            this.scaleFactor.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.scaleFactor.Location = new System.Drawing.Point(566, 290);
+            this.scaleFactor.Maximum = new decimal(new int[] {
+            30,
+            0,
+            0,
+            65536});
+            this.scaleFactor.Minimum = new decimal(new int[] {
+            11,
+            0,
+            0,
+            65536});
+            this.scaleFactor.Name = "scaleFactor";
+            this.scaleFactor.Size = new System.Drawing.Size(48, 20);
+            this.scaleFactor.TabIndex = 9;
+            this.scaleFactor.Value = new decimal(new int[] {
+            11,
+            0,
+            0,
+            65536});
+            this.scaleFactor.Visible = false;
+            // 
+            // neighbors
+            // 
+            this.neighbors.Location = new System.Drawing.Point(566, 316);
+            this.neighbors.Maximum = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+            this.neighbors.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.neighbors.Name = "neighbors";
+            this.neighbors.Size = new System.Drawing.Size(48, 20);
+            this.neighbors.TabIndex = 10;
+            this.neighbors.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.neighbors.Visible = false;
+            // 
+            // scaleFactorLbl
+            // 
+            this.scaleFactorLbl.AutoSize = true;
+            this.scaleFactorLbl.Location = new System.Drawing.Point(492, 292);
+            this.scaleFactorLbl.Name = "scaleFactorLbl";
+            this.scaleFactorLbl.Size = new System.Drawing.Size(67, 13);
+            this.scaleFactorLbl.TabIndex = 11;
+            this.scaleFactorLbl.Text = "Scale Factor";
+            this.scaleFactorLbl.Visible = false;
+            // 
+            // neighborsLbl
+            // 
+            this.neighborsLbl.AutoSize = true;
+            this.neighborsLbl.Location = new System.Drawing.Point(492, 318);
+            this.neighborsLbl.Name = "neighborsLbl";
+            this.neighborsLbl.Size = new System.Drawing.Size(55, 13);
+            this.neighborsLbl.TabIndex = 12;
+            this.neighborsLbl.Text = "Neighbors";
+            this.neighborsLbl.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(639, 405);
+            this.Controls.Add(this.neighborsLbl);
+            this.Controls.Add(this.scaleFactorLbl);
+            this.Controls.Add(this.neighbors);
+            this.Controls.Add(this.scaleFactor);
             this.Controls.Add(this.totalTime);
             this.Controls.Add(this.drawingTime);
             this.Controls.Add(this.detectionTime);
@@ -136,6 +218,8 @@
             this.Text = "Form1";
             ((System.ComponentModel.ISupportInitialize)(this.picCapture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.picFace)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.scaleFactor)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.neighbors)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -151,6 +235,10 @@
         private System.Windows.Forms.Label detectionTime;
         private System.Windows.Forms.Label drawingTime;
         private System.Windows.Forms.Label totalTime;
+        private System.Windows.Forms.NumericUpDown scaleFactor;
+        private System.Windows.Forms.NumericUpDown neighbors;
+        private System.Windows.Forms.Label scaleFactorLbl;
+        private System.Windows.Forms.Label neighborsLbl;
     }
 }
 

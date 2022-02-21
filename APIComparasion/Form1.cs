@@ -29,28 +29,8 @@ namespace APIComparasion
         public Form1()
         {
             InitializeComponent();
-        }
 
-        private void btnCenterFace_Click(object sender, EventArgs e)
-        {
-            if (!emguCvFlag)
-            {
-                _captureOpenCv = new VideoCapture(0);
-                centerFace = true;
-
-                Application.Idle += ProcessFrame;
-            }
-        }
-
-        private void btnEmgu_Click(object sender, EventArgs e)
-        {
-            if (!centerFace)
-            {
-                _captureEmgu = new Emgu.CV.Capture();
-                emguCvFlag = true;
-
-                Application.Idle += ProcessFrame;
-            }
+            switchParametersOptionsVisibility(false);
         }
 
         private void ProcessFrame(object sender, EventArgs e)
@@ -71,10 +51,20 @@ namespace APIComparasion
             }
             else if (emguCvFlag)
             {
+                var scaleFactorValue = decimal.ToDouble(scaleFactor.Value);
+                var neighborsValue = decimal.ToInt32(neighbors.Value);
+
                 var watch = System.Diagnostics.Stopwatch.StartNew();
 
                 _captureEmgu.Retrieve(imageEmgu, 0);
-                picCapture.Image = EmguCvAPI.DetectFaces(imageEmgu, picCapture.Width, picCapture.Height, detectionTime, drawingTime).Bitmap;
+                picCapture.Image = EmguCvAPI.DetectFaces(imageEmgu,
+                    picCapture.Width,
+                    picCapture.Height,
+                    scaleFactorValue,
+                    neighborsValue,
+                    detectionTime,
+                    drawingTime)
+                    .Bitmap;
 
                 picFace.SizeMode = PictureBoxSizeMode.StretchImage;
                 if (EmguCvAPI.resultImage != null)
@@ -92,10 +82,47 @@ namespace APIComparasion
             }
         }
 
+        private void btnCenterFace_Click(object sender, EventArgs e)
+        {
+            if (!emguCvFlag)
+            {
+                switchParametersOptionsVisibility(false);
+
+                _captureOpenCv = new VideoCapture(0);
+                centerFace = true;
+
+                Application.Idle += ProcessFrame;
+            }
+        }
+
+        private void btnEmgu_Click(object sender, EventArgs e)
+        {
+            if (!centerFace)
+            {
+                switchParametersOptionsVisibility(true);
+
+                _captureEmgu = new Emgu.CV.Capture();
+                emguCvFlag = true;
+
+                Application.Idle += ProcessFrame;
+            }
+        }
+
         private void btnReset_Click(object sender, EventArgs e)
         {
             Application.Restart();
             Environment.Exit(0);
+        }
+
+        public void switchParametersOptionsVisibility(bool visibility)
+        {
+            // Labels
+            scaleFactorLbl.Visible = visibility;
+            scaleFactor.Visible = visibility;
+
+            // Inputs
+            neighborsLbl.Visible = visibility;
+            neighbors.Visible = visibility;
         }
     }
 }

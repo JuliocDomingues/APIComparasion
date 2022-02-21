@@ -23,7 +23,7 @@ namespace APIComparasion.EmguCVAPI
 
         }
 
-        public static Image<Bgr, Byte> DetectFaces(Mat frame, int width, int height, Label detectionTimeLabel, Label drawingTimeLabel)
+        public static Image<Bgr, Byte> DetectFaces(Mat frame, int width, int height, double scaleFactor, int neighbors, Label detectionTimeLabel, Label drawingTimeLabel)
         {
             // Start watch to mesure time to detect
             var watch = System.Diagnostics.Stopwatch.StartNew();
@@ -34,7 +34,7 @@ namespace APIComparasion.EmguCVAPI
             CvInvoke.CvtColor(currentFrame, grayImage, ColorConversion.Bgr2Gray);
             CvInvoke.EqualizeHist(grayImage, grayImage);
 
-            Rectangle[] faces = faceCasacdeClassifier.DetectMultiScale(grayImage, 1.1, 3, Size.Empty, Size.Empty);
+            Rectangle[] faces = faceCasacdeClassifier.DetectMultiScale(grayImage, scaleFactor, neighbors, Size.Empty, Size.Empty);
 
             watch.Stop();
             detectionTimeLabel.Text = "Detection time: " + watch.ElapsedMilliseconds.ToString() + " ms";
