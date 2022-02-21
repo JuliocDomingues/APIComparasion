@@ -39,7 +39,7 @@ namespace APIComparasion
                 centerFace = true;
 
                 Application.Idle += ProcessFrame;
-            }    
+            }
         }
 
         private void btnEmgu_Click(object sender, EventArgs e)
@@ -57,11 +57,17 @@ namespace APIComparasion
         {
             if (centerFace)
             {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+
                 imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
 
-                Mat mat = CenterFaceDotNetAPI.DetectFaces(imageOpenCv, picFace.Width, picFace.Height);
+                Mat mat = CenterFaceDotNetAPI.DetectFaces(detectionTime, drawingTime, imageOpenCv, picFace.Width, picFace.Height);
+
                 picCapture.Image = mat.ToBitmap();
                 picFace.Image = CenterFaceDotNetAPI.smallImage;
+                
+                watch.Stop();
+                totalTime.Text = "Total time: " + watch.ElapsedMilliseconds.ToString() + " ms";
             }
             else if (emguCvFlag)
             {

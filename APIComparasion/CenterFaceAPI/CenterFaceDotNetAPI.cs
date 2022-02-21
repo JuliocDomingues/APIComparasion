@@ -5,7 +5,7 @@ using CenterFaceDotNet;
 using OpenCvSharp;
 using OpenCvSharp.Extensions;
 using APIComparasion.HelperMethods;
-using System;
+using System.Windows.Forms;
 
 namespace APIComparasion.CenterFaceAPI
 {
@@ -28,11 +28,20 @@ namespace APIComparasion.CenterFaceAPI
 
         }
 
-        public static Mat DetectFaces(Mat image, int width, int height)
+        public static Mat DetectFaces(Label detectionTimeLabel, Label drawingTimeLabel, Mat image, int width, int height)
         {
-            var inMat = NcnnDotNet.Mat.FromPixels(image.Data, NcnnDotNet.PixelType.Bgr2Gray, image.Cols, image.Rows);
+            // Start watch to mesure time to detect
+            var watch = System.Diagnostics.Stopwatch.StartNew();
 
+            var inMat = NcnnDotNet.Mat.FromPixels(image.Data, NcnnDotNet.PixelType.Bgr2Gray, image.Cols, image.Rows);
             var faceInfos = _centerFace.Detect(inMat, image.Cols, image.Rows).ToArray();
+
+            watch.Stop();
+            detectionTimeLabel.Text = "Detection time: " + watch.ElapsedMilliseconds.ToString() + " ms";
+
+            // Restart watch to mesure time to draw
+            watch.Reset();
+            watch.Start();
 
             foreach (FaceInfo face in faceInfos)
             {
@@ -54,6 +63,10 @@ namespace APIComparasion.CenterFaceAPI
                     Cv2.Circle(image, center, 2, new Scalar(255, 255, 0), 2);
                 }
             }
+
+            watch.Stop();
+            drawingTimeLabel.Text = "Drawing time: " + watch.ElapsedMilliseconds.ToString() + " ms";
+
             return image;
         }
     }
