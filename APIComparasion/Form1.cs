@@ -12,6 +12,7 @@ using APIComparasion.HelperMethods;
 using APIComparasion.CenterFaceAPI;
 using APIComparasion.EmguCVAPI;
 using OpenCvSharp.Extensions;
+using APIComparasion.FaceDetectionCustom;
 
 namespace APIComparasion
 {
@@ -19,11 +20,16 @@ namespace APIComparasion
     {
         #region Variables
         private VideoCapture _captureOpenCv = null;
+        //private VideoCapture _captureFace = null;
         private Emgu.CV.Capture _captureEmgu = null;
         private bool centerFace = false;
-        private bool emguCvFlag = false;
+        private bool emguCvFlag = false; 
+        private bool faceRecognition = false;
         Mat imageOpenCv;
+        //Mat imageFace;
         Emgu.CV.Mat imageEmgu = new Emgu.CV.Mat();
+        VideoCapture videoCapture;
+        CameraModule cameraModule;
         #endregion
 
         public Form1()
@@ -75,6 +81,21 @@ namespace APIComparasion
                 watch.Stop();
                 totalTime.Text = "Total time: " + watch.ElapsedMilliseconds.ToString() + " ms";
             }
+            else if (faceRecognition)
+            {
+                var watch = System.Diagnostics.Stopwatch.StartNew();
+
+                picCapture.Image = FaceRecognitionDNet.FaceRecDotNet.InitFace(videoCapture, cameraModule, detectionTime, drawingTime);
+
+                picFace.SizeMode = PictureBoxSizeMode.StretchImage;
+                if (FaceRecognitionDNet.FaceRecDotNet.resultImage != null)
+                {
+                    picFace.Image = FaceRecognitionDNet.FaceRecDotNet.resultImage;
+                }
+
+                watch.Stop();
+                totalTime.Text = "Total time: " + watch.ElapsedMilliseconds.ToString() + " ms";
+            }
             else
             {
                 imageOpenCv = Helpers.GetFrame(_captureOpenCv, 1.0);
@@ -84,7 +105,7 @@ namespace APIComparasion
 
         private void btnCenterFace_Click(object sender, EventArgs e)
         {
-            if (!emguCvFlag)
+            if (!emguCvFlag && !faceRecognition)
             {
                 switchParametersOptionsVisibility(false);
 
@@ -97,7 +118,7 @@ namespace APIComparasion
 
         private void btnEmgu_Click(object sender, EventArgs e)
         {
-            if (!centerFace)
+            if (!centerFace && !faceRecognition)
             {
                 switchParametersOptionsVisibility(true);
 
@@ -106,6 +127,21 @@ namespace APIComparasion
 
                 Application.Idle += ProcessFrame;
             }
+        }
+
+        private void btnFaceRecognition_Click(object sender, EventArgs e)
+        {
+            if (!centerFace && !emguCvFlag)
+            {
+                videoCapture = new VideoCapture(0); // '0' to default system camera device
+                cameraModule = new CameraModule();
+
+                switchParametersOptionsVisibility(false);
+                faceRecognition = true;
+                
+                Application.Idle += ProcessFrame;
+            }
+                
         }
 
         private void btnReset_Click(object sender, EventArgs e)
@@ -124,5 +160,7 @@ namespace APIComparasion
             neighborsLbl.Visible = visibility;
             neighbors.Visible = visibility;
         }
+
+        
     }
 }
