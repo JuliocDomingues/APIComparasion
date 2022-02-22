@@ -14,7 +14,7 @@ namespace APIComparasion.FaceRecognitionDNet
     public class FaceRecDotNet
     {
         #region Variables
-        private static FaceRecognition _faceRecognition;
+        private static FaceRecognition _faceRecognition = FaceRecognition.Create(Path.GetFullPath("models"));
         #endregion
 
         #region Getters/Setters
@@ -27,7 +27,7 @@ namespace APIComparasion.FaceRecognitionDNet
 
             Enum.TryParse<Model>(modelsDirectory, true, out var model);
 
-            _faceRecognition = FaceRecognition.Create(Path.GetFullPath("models"));
+            //_faceRecognition = FaceRecognition.Create(Path.GetFullPath("models"));
 
             return OpenAndTest(videoCapture, cameraModule, model, detectionTimeLabel,drawingTimeLabel);
         }
