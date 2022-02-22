@@ -52,13 +52,13 @@
             this.picCapture.Location = new System.Drawing.Point(4, 1);
             this.picCapture.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picCapture.Name = "picCapture";
-            this.picCapture.Size = new System.Drawing.Size(644, 495);
+            this.picCapture.Size = new System.Drawing.Size(741, 597);
             this.picCapture.TabIndex = 0;
             this.picCapture.TabStop = false;
             // 
             // btnCenterFace
             // 
-            this.btnCenterFace.Location = new System.Drawing.Point(653, 12);
+            this.btnCenterFace.Location = new System.Drawing.Point(751, 39);
             this.btnCenterFace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnCenterFace.Name = "btnCenterFace";
             this.btnCenterFace.Size = new System.Drawing.Size(187, 28);
@@ -69,16 +69,17 @@
             // 
             // picFace
             // 
-            this.picFace.Location = new System.Drawing.Point(653, 79);
+            this.picFace.Location = new System.Drawing.Point(751, 102);
             this.picFace.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.picFace.Name = "picFace";
             this.picFace.Size = new System.Drawing.Size(187, 182);
             this.picFace.TabIndex = 3;
             this.picFace.TabStop = false;
+            this.picFace.Click += new System.EventHandler(this.picFace_Click);
             // 
             // btnEmgu
             // 
-            this.btnEmgu.Location = new System.Drawing.Point(653, 46);
+            this.btnEmgu.Location = new System.Drawing.Point(751, 71);
             this.btnEmgu.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnEmgu.Name = "btnEmgu";
             this.btnEmgu.Size = new System.Drawing.Size(187, 27);
@@ -89,7 +90,7 @@
             // 
             // btnReset
             // 
-            this.btnReset.Location = new System.Drawing.Point(653, 462);
+            this.btnReset.Location = new System.Drawing.Point(751, 562);
             this.btnReset.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.btnReset.Name = "btnReset";
             this.btnReset.Size = new System.Drawing.Size(187, 26);
@@ -101,7 +102,7 @@
             // detectionTime
             // 
             this.detectionTime.AutoSize = true;
-            this.detectionTime.Location = new System.Drawing.Point(655, 292);
+            this.detectionTime.Location = new System.Drawing.Point(748, 318);
             this.detectionTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.detectionTime.Name = "detectionTime";
             this.detectionTime.Size = new System.Drawing.Size(98, 16);
@@ -111,7 +112,7 @@
             // drawingTime
             // 
             this.drawingTime.AutoSize = true;
-            this.drawingTime.Location = new System.Drawing.Point(655, 315);
+            this.drawingTime.Location = new System.Drawing.Point(748, 334);
             this.drawingTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.drawingTime.Name = "drawingTime";
             this.drawingTime.Size = new System.Drawing.Size(90, 16);
@@ -121,7 +122,7 @@
             // totalTime
             // 
             this.totalTime.AutoSize = true;
-            this.totalTime.Location = new System.Drawing.Point(655, 268);
+            this.totalTime.Location = new System.Drawing.Point(748, 302);
             this.totalTime.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.totalTime.Name = "totalTime";
             this.totalTime.Size = new System.Drawing.Size(100, 16);
@@ -136,8 +137,8 @@
             0,
             0,
             65536});
-            this.scaleFactor.Location = new System.Drawing.Point(755, 357);
-            this.scaleFactor.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.scaleFactor.Location = new System.Drawing.Point(843, 504);
+            this.scaleFactor.Margin = new System.Windows.Forms.Padding(4);
             this.scaleFactor.Maximum = new decimal(new int[] {
             30,
             0,
@@ -160,8 +161,8 @@
             // 
             // neighbors
             // 
-            this.neighbors.Location = new System.Drawing.Point(755, 389);
-            this.neighbors.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.neighbors.Location = new System.Drawing.Point(843, 534);
+            this.neighbors.Margin = new System.Windows.Forms.Padding(4);
             this.neighbors.Maximum = new decimal(new int[] {
             20,
             0,
@@ -185,7 +186,7 @@
             // scaleFactorLbl
             // 
             this.scaleFactorLbl.AutoSize = true;
-            this.scaleFactorLbl.Location = new System.Drawing.Point(656, 359);
+            this.scaleFactorLbl.Location = new System.Drawing.Point(752, 504);
             this.scaleFactorLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.scaleFactorLbl.Name = "scaleFactorLbl";
             this.scaleFactorLbl.Size = new System.Drawing.Size(83, 16);
@@ -196,7 +197,7 @@
             // neighborsLbl
             // 
             this.neighborsLbl.AutoSize = true;
-            this.neighborsLbl.Location = new System.Drawing.Point(656, 391);
+            this.neighborsLbl.Location = new System.Drawing.Point(752, 534);
             this.neighborsLbl.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.neighborsLbl.Name = "neighborsLbl";
             this.neighborsLbl.Size = new System.Drawing.Size(70, 16);
@@ -206,7 +207,7 @@
             // 
             // btnFaceRecognition
             // 
-            this.btnFaceRecognition.Location = new System.Drawing.Point(846, 12);
+            this.btnFaceRecognition.Location = new System.Drawing.Point(751, 6);
             this.btnFaceRecognition.Name = "btnFaceRecognition";
             this.btnFaceRecognition.Size = new System.Drawing.Size(187, 28);
             this.btnFaceRecognition.TabIndex = 13;
@@ -218,7 +219,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 498);
+            this.ClientSize = new System.Drawing.Size(1139, 599);
             this.Controls.Add(this.btnFaceRecognition);
             this.Controls.Add(this.neighborsLbl);
             this.Controls.Add(this.scaleFactorLbl);

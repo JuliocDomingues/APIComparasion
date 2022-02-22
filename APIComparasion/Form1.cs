@@ -87,7 +87,7 @@ namespace APIComparasion
 
                 picCapture.Image = FaceRecognitionDNet.FaceRecDotNet.InitFace(videoCapture, cameraModule, detectionTime, drawingTime);
 
-               // picFace.SizeMode = PictureBoxSizeMode.StretchImage;
+                picFace.SizeMode = PictureBoxSizeMode.StretchImage;
                 if (FaceRecognitionDNet.FaceRecDotNet.resultImage != null)
                 {
                     picFace.Image = FaceRecognitionDNet.FaceRecDotNet.resultImage;
@@ -161,6 +161,9 @@ namespace APIComparasion
             neighbors.Visible = visibility;
         }
 
-        
+        private void picFace_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
